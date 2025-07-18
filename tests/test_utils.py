@@ -58,7 +58,7 @@ from accelerate.utils import (
     save,
     send_to_device,
 )
-from accelerate.utils.operations import is_namedtuple, concatenate
+from accelerate.utils.operations import concatenate, is_namedtuple
 
 
 if is_torch_xla_available():
