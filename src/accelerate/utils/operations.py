@@ -610,9 +610,11 @@ def concatenate(data, dim=0):
     Returns:
         The same data structure as `data` with all the tensors concatenated.
     """
+    if isinstance(data[0], (bool, int, dict)): # Constants
+        return data[0]
     if isinstance(data[0], (tuple, list)):
         first_inner = data[0][0] if len(data[0]) > 0 else None
-
+            
         if isinstance(first_inner, str):
             return honor_type(data[0], [item for sublist in data for item in sublist])
         else:
@@ -622,10 +624,8 @@ def concatenate(data, dim=0):
         return type(data[0])(
             {k: concatenate([d[k] for d in data], dim=dim) for k in data[0].keys()}
         )
-    elif len(data) == 1:
-        return data
     elif not isinstance(data[0], torch.Tensor):
-        return data[0]
+        raise TypeError(f"Can only concatenate tensors but got {type(data[0])}")
     return torch.cat(data, dim=dim)
 
 
