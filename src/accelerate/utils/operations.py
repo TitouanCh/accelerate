@@ -629,8 +629,10 @@ def concatenate(data, dim=0):
         return type(data[0])(
             {k: concatenate([d[k] for d in data], dim=dim) for k in data[0].keys()}
         )
+    elif len(data) == 1:
+        return data
     elif not isinstance(data[0], torch.Tensor):
-        raise TypeError(f"Can only concatenate tensors but got {type(data[0])}")
+        return data[0]
     return torch.cat(data, dim=dim)
 
 
