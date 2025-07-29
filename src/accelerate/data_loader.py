@@ -311,7 +311,7 @@ class IterableDatasetShard(IterableDataset):
                 f"needs to be a round multiple of the number of processes ({num_processes})."
             )
         self.dataset = dataset
-        self.batch_size = batch_size
+        self.batch_size = batch_size if batch_size else 1
         self.drop_last = drop_last
         self.num_processes = num_processes
         self.process_index = process_index
